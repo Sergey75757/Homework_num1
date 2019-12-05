@@ -1,3 +1,5 @@
+'use strict';
+
 let money = +prompt("Ваш бюджет на месяц", '');
 let time = prompt("Введите дату в формате YYYY-MM-DD", '');
 
@@ -16,10 +18,13 @@ for (let i = 0; i < 2; i++){
         b = prompt("Во сколько обойдется", '');
     if ( (typeof(a)) === 'string' && (typeof(a)) != null && (typeof(b)) != null && a != '' 
         && b != '' && a.length < 50) {
+
         console.log("done");
+
         appData.expenses[a] = b;
-    } else {
-        
+    } else {                            
+        console.log ("bad result");
+        i--;
     }
 };
 
@@ -56,6 +61,7 @@ for (let i = 0; i < 2; i++){
                 
 //     }
 // } while (i < 2);
+
 
 appData.moneyPerDay = appData.budget / 30;
 
