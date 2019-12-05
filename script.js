@@ -1,7 +1,16 @@
 'use strict';
+let money, time;
 
-let money = +prompt("Ваш бюджет на месяц", '');
-let time = prompt("Введите дату в формате YYYY-MM-DD", '');
+function start() {
+    money = +prompt("Ваш бюджет на месяц", '');
+    time = prompt("Введите дату в формате YYYY-MM-DD", '');
+
+    while(isNaN(money) || money == "" || money == null){
+        money = +prompt("Ваш бюджет на месяц", '');
+    }
+}
+
+start();
 
 let appData = {
     budget: money,
@@ -9,70 +18,77 @@ let appData = {
     expenses : {}, 
     optionalExpenses : {},
     income : [],
-    savings : false
+    savings : true
 };
 
-// 1-ый способ:
-for (let i = 0; i < 2; i++){
-    let a = prompt("Введите обязательную статью расходов в этом месяце", ''),
-        b = prompt("Во сколько обойдется", '');
-    if ( (typeof(a)) === 'string' && (typeof(a)) != null && (typeof(b)) != null && a != '' 
-        && b != '' && a.length < 50) {
 
-        console.log("done");
 
-        appData.expenses[a] = b;
-    } else {                            
-        console.log ("bad result");
-        i--;
+function chooseExpenses() {
+    for (let i = 0; i < 2; i++){
+        let a = prompt("Введите обязательную статью расходов в этом месяце", ''),
+            b = prompt("Во сколько обойдется", '');
+            if ( (typeof(a)) === 'string' && (typeof(a)) != null && (typeof(b)) != null && a != '' 
+            && b != '' && a.length < 50) {
+
+            console.log("done");
+
+            appData.expenses[a] = b;
+        } else {                            
+            console.log ("bad result");
+            i--;
+        }
     }
-};
+}
+chooseExpenses();
 
+function checkSavings() {
+    if (appData.savings == true) {
+        let save = +prompt("Какова сумма накоплений?"),
+            percent = +prompt("Под какой процент?");
 
-//2-ой способ:
-// let i = 0;
+        appData.monthIncore = save/100/12*percent;
+        alert("Доход в месяц с вашего депазита: " + appData.monthIncore);
+    }
+}
 
-// while (i < 2) {
-//     i++;
-//     let a = prompt("Введите обязательную статью расходов в этом месяце", ''),
-//         b = prompt("Во сколько обойдется", '');
-//     if ( (typeof(a)) === 'string' && (typeof(a)) != null && (typeof(b)) != null && a != '' 
-//         && b != '' && a.length < 50) {
-//         console.log("done");
-//         appData.expenses[a] = b;
-//     } else {
-            
-//     }
-// };
+checkSavings();
 
+function detectDayBudget() {
+    appData.moneyPerDay = (appData.budget / 30).toFixed();
 
-// 3-ий способ:
-// let i = 0;
+    alert("Ежедневный бюджет: " + appData.moneyPerDay);
+}
 
-// do {
-//     i++;
-//     let a = prompt("Введите обязательную статью расходов в этом месяце", ''),
-//         b = prompt("Во сколько обойдется", '');
-//     if ( (typeof(a)) === 'string' && (typeof(a)) != null && (typeof(b)) != null && a != '' 
-//         && b != '' && a.length < 50) {
-//         console.log("done");
-//         appData.expenses[a] = b;
-//     } else {
-                
-//     }
-// } while (i < 2);
+detectDayBudget();
 
+function detectLevel() {
+    if (appData.moneyPerDay < 100) {
+        console.log("Минимальный уровень достатка")
+    } else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000) {
+        console.log("Средний уровень достатка");
+    } else if (appData.moneyPerDay > 2000) {
+        console.log("Высокий уровень достатка");
+    } else {
+        console.log("Произошла ошибка");
+    }
+}
 
-appData.moneyPerDay = appData.budget / 30;
+detectLevel();
 
-alert("Ежедневный бюджет: " + appData.moneyPerDay);
+function chooseOptExpenses() {
+    for (let i = 1; i <= 3; i++){
+        let OptExpenses = prompt("Статья необязательных расходов", '');
 
-if (appData.moneyPerDay < 100) {
-    console.log("Минимальный уровень достатка")
-} else if (appData.moneyPerDay > 100 && appData.moneyPerDay < 2000) {
-    console.log("Средний уровень достатка");
-} else if (appData.moneyPerDay > 2000) {
-    console.log("Высокий уровень достатка");
-} else {
-    console.log("Произошла ошибка");
-};
+        if ((typeof(OptExpenses)) === 'string' && (typeof(OptExpenses)) != '' 
+        && (typeof(OptExpenses)) != null && OptExpenses.length < 50) {
+            appData.optionalExpenses[i] = OptExpenses;
+        } else {
+            i--;
+        }
+    }
+}
+
+chooseOptExpenses();
+
+//Для себя
+console.log(appData);
