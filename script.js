@@ -79,8 +79,8 @@ function chooseOptExpenses() {
     for (let i = 1; i <= 3; i++){
         let OptExpenses = prompt("Статья необязательных расходов", '');
 
-        if ((typeof(OptExpenses)) === 'string' && (typeof(OptExpenses)) != '' 
-        && (typeof(OptExpenses)) != null && OptExpenses.length < 50) {
+        if ((typeof(OptExpenses)) === 'string' && (typeof(OptExpenses)) != null
+        && OptExpenses != '' && OptExpenses.length < 50) {
             appData.optionalExpenses[i] = OptExpenses;
         } else {
             i--;
