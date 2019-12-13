@@ -90,7 +90,3 @@ let appData = {
         }
     }
 };
-
-for (let key in appData) {
-    console.log('\n' + 'Наша программа включает в себя данные: ' + key + ': ' + appData[key] + ';');
-}
